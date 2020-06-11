@@ -22,7 +22,9 @@
     right: 0;
     bottom: 0;
     box-shadow: 0px -1px 1px rgba(0,0,0,0.1);
-    height: 48px;
+    height: 70px;
+    z-index: 9;
+
   }
 
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="tabbar-item" @click="tabbarItemClick">
-    <div class="tabbar-item-content" :class="{active:isActive}">
+  <div class="tabbar-item" @click="tabbarItemClick" :class="{active:isActive}">
+    <div class="tabbar-item-content" >
       <slot name="tabbar-item-content-icon"></slot>
       <slot name="tabbar-item-content-text"></slot>
     </div>
@@ -38,13 +38,15 @@
   .tabbar-item{
     flex: 1;
     height: 100%;
+    transition:all 0.5s;
+    transition-timing-function: ease;
+    -webkit-transition:all 0.5s; /* Safari */
+    -webkit-transition-timing-function: ease;
+
   }
   .tabbar-item-content{
-    padding:3px 0;
-    transition:color 1s,background-color 0.5s ;
-    transition-timing-function: ease;
-    -webkit-transition:color 0.5s, background-color 0.5s; /* Safari */
-    -webkit-transition-timing-function: ease;
+    padding-top:8px;
+
   }
 
   .active{

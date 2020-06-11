@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <tab-bar>
+    <tab-bar id="tabbar">
       <tab-bar-item path="/home">
         <i slot="tabbar-item-content-icon" class="fas fa-home fa-lg"></i>
         <div slot="tabbar-item-content-text">首页</div>
