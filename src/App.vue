@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive exclude="detail">
+      <router-view></router-view>
+    </keep-alive>
+
     <tab-bar id="tabbar">
       <tab-bar-item path="/home">
         <i slot="tabbar-item-content-icon" class="fas fa-home fa-lg"></i>

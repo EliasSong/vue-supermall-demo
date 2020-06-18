@@ -1,5 +1,5 @@
 <template>
-  <div class="goodviewitem">
+  <div class="goodviewitem" @click="goodItemClick">
     <img :src="gooditem.show.img" alt="">
     <p>{{gooditem.title}}</p>
     <span class="goodItemPrice">价格：{{gooditem.price}}</span>
@@ -16,6 +16,11 @@
         default(){
           return {};
         }
+      }
+    },
+    methods:{
+      goodItemClick(){
+        this.$router.push("/detail/"+this.gooditem.iid)
       }
     }
   }

@@ -66,6 +66,7 @@
         backBtnShowFlag:false,
         tabbarControlOffsetTop:0,
         tabbarControlFixedFlag:false,
+        saveY:0,
         goods:{
           "pop":{page:0,list:[]},
           "new":{page:0,list:[]},
@@ -87,7 +88,20 @@
       this.setTabbarControlOffsetTop();
 
     },
+    activated() {
+      this.enterHomePageStateRestore();
+    },
+    deactivated() {
+      this.leaveHomePageStateSave();
+    },
     methods:{
+      leaveHomePageStateSave(){
+        this.saveY = this.$refs.HomeScroll.scroll.y;
+      },
+      enterHomePageStateRestore(){
+        this.$refs.HomeScroll.scroll.scrollTo(0,this.saveY);
+        this.scrollAreaRefresh();
+      },
       tabChange(index){
         this.currentTabLabel = this.indexTypeMap[index];
         this.$refs.HomeTabControl2.currentIdx=index;
@@ -148,6 +162,7 @@
 <style scoped>
   #home{
     margin-bottom: 70px;
+    background-color: whitesmoke;
 
   }
   .ScrollArea{

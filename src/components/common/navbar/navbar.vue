@@ -18,18 +18,12 @@
     display: flex;
     height: 44px;
     line-height: 44px;
-    background-color: whitesmoke;
     text-align: center;
     box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
-    /*position: fixed;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*top: 0;*/
-    /*z-index: 1;*/
+    font-size: 1.2rem;
   }
   .navbar-left,.navbar-right{
     width: 60px;
-    background-color: blue;
 
   }
   .navbar-middle{
