@@ -15,7 +15,7 @@
     <div class="info-detail">
       <p>{{comments.content}}</p>
       <div class="info-other">
-        <span class="date">{{comments.created}}</span>
+        <span class="date">{{comments.created | showDate}}</span>
         <span>{{comments.style}}</span>
       </div>
       <div class="info-imgs">
@@ -34,6 +34,19 @@
         default(){
           return {};
         }
+      }
+    },
+    filters:{
+      showDate(val){
+        const date = new Date(val * 1000)
+        const month = String(date.getMonth()+1);
+        const year =String(date.getFullYear());
+        const day = String(date.getDay());
+        const hour = String(date.getHours());
+        const minute = String(date.getMinutes());
+        const fullminute = String("00"+minute).substr(minute.length);
+        const second = String(date.getSeconds());
+        return year+'-'+month +'-'+day+' '+hour+':'+fullminute+':'+second;
       }
     }
   }

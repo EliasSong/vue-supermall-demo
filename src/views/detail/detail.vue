@@ -26,6 +26,7 @@
       <DetailImageInfo class="imageInfo" :image="detailImageData"></DetailImageInfo>
       <DetailGoodParamsInfo :good-params="detailGoodParamsData"></DetailGoodParamsInfo>
       <DetailCommentsInfo :comments="detailCommentsData"></DetailCommentsInfo>
+      <DetailRecommendInfo class="recommend" :goods="detailRecommendData"></DetailRecommendInfo>
     </DetailScroll>
     <DetailBacktop @click.native="backTopBtnClick" v-show="backTopBtnShowFlag"></DetailBacktop>
   </div>
@@ -41,7 +42,8 @@
   import DetailBacktop from "../../components/content/backtop/backtop";
   import DetailGoodParamsInfo from "./ChildrenComponents/DetailGoodParamsInfo";
   import DetailCommentsInfo from "./ChildrenComponents/DetailCommentsInfo";
-  import {getDetailData,DetailGood,DetailShop} from "../../network/detail";
+  import DetailRecommendInfo from "../../components/content/goodsview/goodsview";
+  import {getDetailData,getRecommandDate,DetailGood,DetailShop} from "../../network/detail";
   export default {
     name: "detail",
     data(){
@@ -52,6 +54,7 @@
         detailShopData:{},
         detailImageData:{},
         detailCommentsData:{},
+        detailRecommendData:[],
         backTopBtnShowFlag:true,
         titles:["商品","参数","评论","推荐"],
         currentIdx:0,
@@ -87,6 +90,9 @@
           this.detailCommentsData = res.result.rate.list[0];
         }
       })
+      getRecommandDate().then(res => {
+        this.detailRecommendData = res.data.list;
+      })
     },
     updated() {
       this.$refs.detailScroll.scroll.refresh();
@@ -101,6 +107,7 @@
       DetailBacktop,
       DetailGoodParamsInfo,
       DetailCommentsInfo,
+      DetailRecommendInfo,
 
     }
   }
@@ -155,5 +162,8 @@
   }
   .shopInfo{
     background-color: whitesmoke;
+  }
+  .recommend{
+    box-shadow: 0 -1px 1px rgba(100,100,100,0.1);
   }
 </style>

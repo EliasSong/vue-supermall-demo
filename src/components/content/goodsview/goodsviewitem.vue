@@ -1,6 +1,6 @@
 <template>
   <div class="goodviewitem" @click="goodItemClick">
-    <img :src="gooditem.show.img" alt="">
+    <img :src="showImage" alt="">
     <p>{{gooditem.title}}</p>
     <span class="goodItemPrice">价格：{{gooditem.price}}</span>
     <span class="goodItemCollect"><i style="color: #f86666" class="fas fa-heart"></i> {{gooditem.cfav}}</span>
@@ -18,9 +18,19 @@
         }
       }
     },
+    computed:{
+      showImage(){
+        return this.gooditem.image || this.gooditem.show.img;
+      },
+    },
     methods:{
       goodItemClick(){
-        this.$router.push("/detail/"+this.gooditem.iid)
+        if(this.gooditem.iid) {
+          this.$router.push("/detail/" + this.gooditem.iid)
+        }
+        else {
+          console.log("404 not found");
+        }
       }
     }
   }
