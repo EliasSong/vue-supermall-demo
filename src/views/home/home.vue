@@ -108,7 +108,7 @@
         this.$refs.HomeTabControl1.currentIdx=index;
        },
       backClick(){
-        this.$refs.HomeScroll.scroll.scrollTo(0,0,800);
+        this.$refs.HomeScroll.scroll.scrollTo(0,0,500);
       },
       contentScroll(position){
         //判断backtop是否显示

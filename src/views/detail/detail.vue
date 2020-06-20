@@ -20,14 +20,15 @@
     class="scroll"
     @scroll="contentScroll"
     ref="detailScroll">
-      <DetailCarousel class="carousel" :banner="detailGoodData.topImages"></DetailCarousel>
+      <DetailCarousel ref="good" class="carousel" :banner="detailGoodData.topImages"></DetailCarousel>
       <DetailBaseInfo class="baseInfo" :good="detailGoodData"></DetailBaseInfo>
       <DetailShopInfo class="shopInfo" :shop="detailShopData"></DetailShopInfo>
       <DetailImageInfo class="imageInfo" :image="detailImageData"></DetailImageInfo>
-      <DetailGoodParamsInfo :good-params="detailGoodParamsData"></DetailGoodParamsInfo>
-      <DetailCommentsInfo :comments="detailCommentsData"></DetailCommentsInfo>
-      <DetailRecommendInfo class="recommend" :goods="detailRecommendData"></DetailRecommendInfo>
+      <DetailGoodParamsInfo ref="params" :good-params="detailGoodParamsData"></DetailGoodParamsInfo>
+      <DetailCommentsInfo ref="comments" :comments="detailCommentsData"></DetailCommentsInfo>
+      <DetailRecommendInfo ref="recommend" class="recommend" :goods="detailRecommendData"></DetailRecommendInfo>
     </DetailScroll>
+    <DetailBottomBar></DetailBottomBar>
     <DetailBacktop @click.native="backTopBtnClick" v-show="backTopBtnShowFlag"></DetailBacktop>
   </div>
 </template>
@@ -43,6 +44,7 @@
   import DetailGoodParamsInfo from "./ChildrenComponents/DetailGoodParamsInfo";
   import DetailCommentsInfo from "./ChildrenComponents/DetailCommentsInfo";
   import DetailRecommendInfo from "../../components/content/goodsview/goodsview";
+  import DetailBottomBar from "./ChildrenComponents/DetailBottomBar";
   import {getDetailData,getRecommandDate,DetailGood,DetailShop} from "../../network/detail";
   export default {
     name: "detail",
@@ -55,20 +57,22 @@
         detailImageData:{},
         detailCommentsData:{},
         detailRecommendData:[],
-        backTopBtnShowFlag:true,
+        backTopBtnShowFlag:false,
         titles:["商品","参数","评论","推荐"],
         currentIdx:0,
+        titlesTopY:[0,0,0,0],
       }
     },
     methods:{
       titleItemClick(index){
         this.currentIdx = index;
+        this.$refs.detailScroll.scroll.scrollTo(0,-this.titlesTopY[index],300);
       },
       backClick(){
         this.$router.back();
       },
       backTopBtnClick(){
-        this.$refs.detailScroll.scroll.scrollTo(0,0,800);
+        this.$refs.detailScroll.scroll.scrollTo(0,0,500);
       },
       contentScroll(position){
         if(position.y<-500){
@@ -77,6 +81,26 @@
         else{
           this.backTopBtnShowFlag = false;
         }
+        if(-position.y < this.titlesTopY[1])
+        {
+          this.currentIdx = 0;
+        }
+        else if(-position.y < this.titlesTopY[2]){
+          this.currentIdx = 1;
+        }
+        else if(-position.y < this.titlesTopY[3]){
+          this.currentIdx = 2;
+        }
+        else{
+          this.currentIdx = 3;
+        }
+      },
+      setTitleTopY(){
+        this.titlesTopY[0] = this.$refs.good.$el.offsetTop;
+        this.titlesTopY[1] = this.$refs.params.$el.offsetTop;
+        this.titlesTopY[2] = this.$refs.comments.$el.offsetTop;
+        this.titlesTopY[3] = this.$refs.recommend.$el.offsetTop;
+
       }
     },
     created() {
@@ -96,6 +120,7 @@
     },
     updated() {
       this.$refs.detailScroll.scroll.refresh();
+      this.setTitleTopY();
     },
     components:{
       DetailNavbar,
@@ -108,6 +133,7 @@
       DetailGoodParamsInfo,
       DetailCommentsInfo,
       DetailRecommendInfo,
+      DetailBottomBar,
 
     }
   }
@@ -148,8 +174,9 @@
 
   }
   .scroll{
-    height: calc(100vh  - 44px);
+    height: calc(100vh  - 44px - 70px);
     margin-top:44px;
+    margin-bottom: 70px;
   }
   .detailnavbar{
     position: fixed;
