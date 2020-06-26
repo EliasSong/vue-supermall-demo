@@ -28,7 +28,7 @@
       <DetailCommentsInfo ref="comments" :comments="detailCommentsData"></DetailCommentsInfo>
       <DetailRecommendInfo ref="recommend" class="recommend" :goods="detailRecommendData"></DetailRecommendInfo>
     </DetailScroll>
-    <DetailBottomBar></DetailBottomBar>
+    <DetailBottomBar @addCartSignal="addToCart"></DetailBottomBar>
     <DetailBacktop @click.native="backTopBtnClick" v-show="backTopBtnShowFlag"></DetailBacktop>
   </div>
 </template>
@@ -64,6 +64,16 @@
       }
     },
     methods:{
+      addToCart(){
+        const product = {};
+        product.image = this.detailGoodData.topImages[0];
+        product.title = this.detailGoodData.title;
+        product.desc = this.detailGoodData.desc;
+        product.price = this.detailGoodData.realPrice;
+        product.iid = this.iid;
+        this.$store.dispatch("addToCart",product);
+        console.log(this.$store.state.cartList);
+      },
       titleItemClick(index){
         this.currentIdx = index;
         this.$refs.detailScroll.scroll.scrollTo(0,-this.titlesTopY[index],300);
