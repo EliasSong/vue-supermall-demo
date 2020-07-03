@@ -1,13 +1,48 @@
 <template>
-  <h1>购物车页面</h1>
+  <div class="cart">
+    <CartNavbar>
+      <div slot="middle">购物车</div>
+    </CartNavbar>
+    <CartScroll class ="cartscroll" :probe-type="3">
+      <CartList :cartlist ="cartList" v-if="cartList.length !== 0"></CartList>
+      <div v-else>这里什么都没有</div>
+    </CartScroll>
+    <CartCheckOut></CartCheckOut>
+  </div>
+
 </template>
 
 <script>
+  import CartNavbar from "../../components/common/navbar/navbar";
+  import CartScroll from "../../components/common/scroll/scroll";
+  import CartCheckOut from "./ChildrenComponents/CartCheckOut";
+  import CartList from "./ChildrenComponents/CartList";
   export default {
-    name: "cart"
+    name: "cart",
+    components:{
+      CartNavbar,
+      CartScroll,
+      CartCheckOut,
+      CartList,
+    },
+    data(){
+      return {
+        cartList:[]
+      }
+    },
+    created() {
+      this.cartList = this.$store.state.cartList;
+
+    },
+    activated() {
+
+    }
   }
 </script>
 
 <style scoped>
-
+  .cartscroll{
+    height: calc(100vh - 44px - 60px - 45px);
+    overflow: hidden;
+  }
 </style>

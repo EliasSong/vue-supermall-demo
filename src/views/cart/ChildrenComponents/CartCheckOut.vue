@@ -1,5 +1,5 @@
 <template>
-  
+  <div class="checkout">收银操作面板</div>
 </template>
 
 <script>
@@ -9,5 +9,8 @@
 </script>
 
 <style scoped>
-
+  .checkout{
+    background-color: red;
+    height: 45px;
+  }
 </style>
