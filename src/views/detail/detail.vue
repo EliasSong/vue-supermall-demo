@@ -72,7 +72,6 @@
         product.price = this.detailGoodData.realPrice;
         product.iid = this.iid;
         this.$store.dispatch("addToCart",product);
-        console.log(this.$store.state.cartList);
       },
       titleItemClick(index){
         this.currentIdx = index;

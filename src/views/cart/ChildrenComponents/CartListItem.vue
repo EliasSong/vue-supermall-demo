@@ -1,8 +1,8 @@
 <template>
   <div class="cartlistitem">
     <div class="item-selector">
-      <i v-if="itemSelectFlag" @click="itemClick" class="far fa-check-circle fa-2x"></i>
-      <i v-else @click="itemClick" class="far fa-circle fa-2x"></i>
+      <i v-if="itemSelectFlag" @click="itemClickRemove" class="far fa-check-circle fa-2x"></i>
+      <i v-else @click="itemClickAdd" class="far fa-circle fa-2x"></i>
 
     </div>
     <div class="item-img">
@@ -37,8 +37,13 @@
       }
     },
     methods:{
-      itemClick(){
-        this.itemSelectFlag = ! this.itemSelectFlag
+      itemClickAdd(){
+        this.itemSelectFlag = ! this.itemSelectFlag;
+        this.$store.commit("addToCheckOut",this.item);
+      },
+      itemClickRemove(){
+        this.itemSelectFlag = ! this.itemSelectFlag;
+        this.$store.commit("removeToCheckOut",this.item);
       }
     }
   }
@@ -50,7 +55,7 @@
     display: flex;
     padding:5px;
     border-bottom: 1px solid #ccc;
-    background-color: whitesmoke;
+
   }
   .item-selector{
     width: 20px;

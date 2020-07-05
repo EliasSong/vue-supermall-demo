@@ -6,6 +6,10 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state:{
     cartList:[],
+    totalPrice:0,
+    totalCount:0,
+    totalPriceString:"0",
+    totalCountString:"0"
   },
   mutations:{
     addCounter(state , payload){
@@ -13,6 +17,18 @@ const store = new Vuex.Store({
     },
     addToCart(state, payload){
       state.cartList.push(payload);
+    },
+    addToCheckOut(state, payload){
+      state.totalPrice += Number(payload.count) * Number(payload.price);
+      state.totalCount += Number(payload.count);
+      state.totalPriceString = state.totalPrice.toFixed(2);
+      state.totalCountString = state.totalCount.toFixed(0);
+    },
+    removeToCheckOut(state, payload){
+      state.totalPrice -= Number(payload.count) * Number(payload.price);
+      state.totalCount -= Number(payload.count);
+      state.totalPriceString = state.totalPrice.toFixed(2);
+      state.totalCountString = state.totalCount.toFixed(0);
     }
   },
   actions:{
@@ -25,7 +41,8 @@ const store = new Vuex.Store({
         payload.count = 1;
         context.commit("addToCart",payload);
       }
-    }
+    },
+
 
   }
 })

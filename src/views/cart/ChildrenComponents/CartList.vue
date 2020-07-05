@@ -23,5 +23,7 @@
 </script>
 
 <style scoped>
+  .cartlist{
 
+  }
 </style>

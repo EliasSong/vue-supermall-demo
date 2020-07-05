@@ -27,7 +27,9 @@
     },
     data(){
       return {
-        cartList:[]
+        cartList:[],
+        totalPrice:0,
+        totalCount:0,
       }
     },
     created() {
@@ -42,7 +44,7 @@
 
 <style scoped>
   .cartscroll{
-    height: calc(100vh - 44px - 60px - 45px);
+    height: calc(100vh - 44px - 70px - 45px);
     overflow: hidden;
   }
 </style>
