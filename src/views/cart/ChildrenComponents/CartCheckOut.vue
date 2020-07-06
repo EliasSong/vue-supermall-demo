@@ -1,8 +1,8 @@
 <template>
   <div class="checkout">
       <span class="allcheck">
-        <i v-if="selectFlag" class="far fa-check-circle fa-2x"></i>
-        <i v-else  class="far fa-circle fa-2x"></i>
+        <i v-if="this.$store.getters.allCheckFlag" @click="allRemoveToCheckOut" class="far fa-check-circle fa-2x"></i>
+        <i v-else  @click="allAddToCheckOut" class="far fa-circle fa-2x"></i>
       </span>
       <span class="content">
         <span class="price">总价格：{{this.$store.state.totalPriceString}}</span>
@@ -18,9 +18,21 @@
     name: "CartCheckOut",
     data(){
       return{
-        selectFlag:true
+
       }
     },
+    updated() {
+    },
+    methods:{
+      allAddToCheckOut(){
+        this.$store.dispatch("allAddToCheckOut")
+      },
+      allRemoveToCheckOut(){
+        this.$store.dispatch("allRemoveToCheckOut")
+      }
+
+    },
+
     props:{
 
     }

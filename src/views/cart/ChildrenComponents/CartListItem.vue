@@ -1,7 +1,7 @@
 <template>
   <div class="cartlistitem">
     <div class="item-selector">
-      <i v-if="itemSelectFlag" @click="itemClickRemove" class="far fa-check-circle fa-2x"></i>
+      <i v-if="this.$store.getters.itemSelectFlag(item)" @click="itemClickRemove" class="far fa-check-circle fa-2x"></i>
       <i v-else @click="itemClickAdd" class="far fa-circle fa-2x"></i>
 
     </div>
@@ -13,7 +13,11 @@
       <div class="item-desc">{{item.desc}}</div>
       <div class="info-bottom">
         <div class="item-price left">{{item.price}}</div>
-        <div class="item-count right">x{{item.count}}</div>
+        <div class="item-count right">
+          <i @click="itemCountMinus" class="fas fa-minus countBtn"></i>
+          {{item.count}}
+          <i @click="itemCountPlus" class="fas fa-plus countBtn"></i>
+        </div>
       </div>
     </div>
 
@@ -39,11 +43,17 @@
     methods:{
       itemClickAdd(){
         this.itemSelectFlag = ! this.itemSelectFlag;
-        this.$store.commit("addToCheckOut",this.item);
+        this.$store.dispatch("addToCheckOut",this.item);
       },
       itemClickRemove(){
         this.itemSelectFlag = ! this.itemSelectFlag;
-        this.$store.commit("removeToCheckOut",this.item);
+        this.$store.dispatch("removeToCheckOut",this.item);
+      },
+      itemCountPlus(){
+        this.$store.dispatch("cartItemCountPlus",this.item);
+      },
+      itemCountMinus(){
+        this.$store.dispatch("cartItemCountMinus",this.item)
       }
     }
   }
@@ -104,6 +114,13 @@
   .item-count{
     position: absolute;
     right: 10px;
-    bottom: 0px;
+    bottom: -2px;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-radius: 10px;
+
+  }
+  .countBtn{
+    margin: auto 5px;
+    color: gray;
   }
 </style>
