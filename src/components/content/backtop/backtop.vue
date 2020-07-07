@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div  class="back-top">
+    <div v-if="isShow" class="back-top">
       <i class="fas fa-arrow-up fa-2x"></i>
     </div>
   </transition>
@@ -10,6 +10,14 @@
   export default {
     name: "backtop",
     methods:{
+    },
+    props:{
+      isShow:{
+        default(){
+          return false
+        },
+        type:Boolean
+      }
     }
   }
 </script>

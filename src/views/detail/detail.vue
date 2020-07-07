@@ -1,5 +1,6 @@
 <template>
   <div class="detail" >
+
     <DetailNavbar class="detailnavbar">
       <div slot="left" @click="backClick">
         <i class="fas fa-arrow-left"></i>
@@ -29,7 +30,9 @@
       <DetailRecommendInfo ref="recommend" class="recommend" :goods="detailRecommendData"></DetailRecommendInfo>
     </DetailScroll>
     <DetailBottomBar @addCartSignal="addToCart"></DetailBottomBar>
-    <DetailBacktop @click.native="backTopBtnClick" v-show="backTopBtnShowFlag"></DetailBacktop>
+    <DetailBacktop @click.native="backTopBtnClick" :is-show="backTopBtnShowFlag"></DetailBacktop>
+    <DetailToast :is-show="toastShowFlag" :message="toastShowMsg"></DetailToast>
+
   </div>
 </template>
 
@@ -45,6 +48,7 @@
   import DetailCommentsInfo from "./ChildrenComponents/DetailCommentsInfo";
   import DetailRecommendInfo from "../../components/content/goodsview/goodsview";
   import DetailBottomBar from "./ChildrenComponents/DetailBottomBar";
+  import DetailToast from "../../components/common/toast/toast";
   import {getDetailData,getRecommandDate,DetailGood,DetailShop} from "../../network/detail";
   export default {
     name: "detail",
@@ -61,6 +65,8 @@
         titles:["商品","参数","评论","推荐"],
         currentIdx:0,
         titlesTopY:[0,0,0,0],
+        toastShowFlag:false,
+        toastShowMsg:"",
       }
     },
     methods:{
@@ -71,7 +77,13 @@
         product.desc = this.detailGoodData.desc;
         product.price = this.detailGoodData.realPrice;
         product.iid = this.iid;
-        this.$store.dispatch("addToCart",product);
+        this.$store.dispatch("addToCart",product).then(res => {
+          this.toastShowFlag = true;
+          this.toastShowMsg = res;
+          setTimeout(() => {
+            this.toastShowFlag = false;
+          },2000)
+        });
       },
       titleItemClick(index){
         this.currentIdx = index;
@@ -143,6 +155,7 @@
       DetailCommentsInfo,
       DetailRecommendInfo,
       DetailBottomBar,
+      DetailToast
 
     }
   }

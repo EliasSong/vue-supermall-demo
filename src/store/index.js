@@ -46,14 +46,20 @@ const store = new Vuex.Store({
 
   actions:{
     addToCart(context, payload){
-      let product  = context.state.cartList.find(item => item.iid === payload.iid)
-      if(product){
-        context.commit("addCounter",product);
-      }
-      else {
-        payload.count = 1;
-        context.commit("addToCart",payload);
-      }
+      return new Promise((resolve) => {
+        let product  = context.state.cartList.find(item => item.iid === payload.iid)
+        if(product){
+          context.commit("addCounter",product);
+          resolve("商品数目+1");
+        }
+        else {
+          payload.count = 1;
+          context.commit("addToCart",payload);
+          resolve("已添加到购物车");
+        }
+      })
+
+
     },
     addToCheckOut(context,payload){
       context.state.cartCheckOutList.push(payload)
