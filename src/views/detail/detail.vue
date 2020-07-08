@@ -82,7 +82,7 @@
           this.toastShowMsg = res;
           setTimeout(() => {
             this.toastShowFlag = false;
-          },2000)
+          },500)
         });
       },
       titleItemClick(index){
