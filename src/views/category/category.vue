@@ -3,15 +3,14 @@
     <CategoryNavbar>
       <div slot="middle">商品分类</div>
     </CategoryNavbar>
-
     <div class="categoryContent">
       <div class="contentLeft">
-        woshizuobian
+        <CategorySubNavbar @subNavbarCurrentIdxSignal="subNavbatIndexChange" :main-list="mainList"></CategorySubNavbar>
       </div>
       <div class="contentRight">
         <CategoryScroll class="ScrollArea"
                         ref="CategoryScroll">
-                  <img v-for="(item,index) in subList" :key="index" :src="item.image" alt="">
+          <CategoryImageView :sub-list="subList"></CategoryImageView>
         </CategoryScroll>
 
       </div>
@@ -24,10 +23,11 @@
   import CategoryScroll from "../../components/common/scroll/scroll";
   import CategoryNavbar from "../../components/common/navbar/navbar";
   import {getCategory,getSubcategory,getCategoryDetail} from "../../network/category";
-  // import CategorySubNavbar from "./ChildrenComponents/CategorySubNavbar";
+  import CategorySubNavbar from "./ChildrenComponents/CategorySubNavbar";
+  import CategoryImageView from "./ChildrenComponents/CategoryImageView";
 
   export default {
-    name: "Category",
+    name: "category",
     data(){
       return {
         currentIdx:0,
@@ -42,10 +42,27 @@
         currentDetailType:"pop",
       }
     },
+    methods:{
+      subNavbatIndexChange(index){
+        this.currentIdx = index;
+
+        getSubcategory(this.mainList[this.currentIdx].maitKey).then(res => {
+          this.$refs.CategoryScroll.scroll.stop();
+          this.$refs.CategoryScroll.scroll.scrollTo(0,0,0);
+          this.subList = res.data.list;
+          getCategoryDetail(this.mainList[this.currentIdx].miniWallkey,this.currentDetailType).then(res => {
+            this.categoryDetail[this.currentDetailType] = res;
+
+          })
+        })
+
+      }
+    },
     components:{
       CategoryNavbar,
       CategoryScroll,
-      // CategorySubNavbar
+      CategorySubNavbar,
+      CategoryImageView,
     },
     created() {
       getCategory().then(res => {
@@ -71,8 +88,7 @@
     width: 100%;
   }
   .contentLeft{
-    width: 120px;
-    background-color: red;
+    width: 80px;
   }
   .contentRight{
     flex: 1;
