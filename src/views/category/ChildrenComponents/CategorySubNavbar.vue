@@ -42,6 +42,7 @@
   }
   .active{
     background-color: #fff;
+    border-left: 5px solid gray;
   }
 
 

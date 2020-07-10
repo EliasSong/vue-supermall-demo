@@ -11,6 +11,8 @@
         <CategoryScroll class="ScrollArea"
                         ref="CategoryScroll">
           <CategoryImageView :sub-list="subList"></CategoryImageView>
+          <CategoryGoodsControlbar @categoryGoodsTabChangeSignal="goodListChange"></CategoryGoodsControlbar>
+          <CategoryGoodsview :goods="goodList"></CategoryGoodsview>
         </CategoryScroll>
 
       </div>
@@ -25,6 +27,10 @@
   import {getCategory,getSubcategory,getCategoryDetail} from "../../network/category";
   import CategorySubNavbar from "./ChildrenComponents/CategorySubNavbar";
   import CategoryImageView from "./ChildrenComponents/CategoryImageView";
+  import CategoryGoodsview from "./ChildrenComponents/CategoryGoodsview";
+  import CategoryGoodsControlbar from "./ChildrenComponents/CategoryGoodsControlbar";
+
+
 
   export default {
     name: "category",
@@ -33,13 +39,9 @@
         currentIdx:0,
         mainList:[],
         subList:[],
-        categoryDetail:
-          {
-            "pop":[],
-            "new":[],
-            "sell":[]
-          },
+        TypeList:["pop","new","sell"],
         currentDetailType:"pop",
+        goodList:[]
       }
     },
     methods:{
@@ -51,9 +53,16 @@
           this.$refs.CategoryScroll.scroll.scrollTo(0,0,0);
           this.subList = res.data.list;
           getCategoryDetail(this.mainList[this.currentIdx].miniWallkey,this.currentDetailType).then(res => {
-            this.categoryDetail[this.currentDetailType] = res;
+            this.goodList = res;
 
           })
+        })
+
+      },
+      goodListChange(index){
+        this.currentDetailType = this.TypeList[index]
+        getCategoryDetail(this.mainList[this.currentIdx].miniWallkey,this.currentDetailType).then(res => {
+          this.goodList = res;
         })
 
       }
@@ -63,6 +72,9 @@
       CategoryScroll,
       CategorySubNavbar,
       CategoryImageView,
+      CategoryGoodsview,
+      CategoryGoodsControlbar,
+
     },
     created() {
       getCategory().then(res => {
@@ -73,11 +85,13 @@
         getSubcategory(this.mainList[this.currentIdx].maitKey).then( res => {
           this.subList = res.data.list;
           getCategoryDetail(this.mainList[this.currentIdx].miniWallkey,this.currentDetailType).then(res => {
-            this.categoryDetail[this.currentDetailType] = res;
+            this.goodList = res;
           })
         })
       })
-
+    },
+    updated() {
+      this.$refs.CategoryScroll.scroll.refresh()
     }
   }
 </script>
@@ -88,10 +102,11 @@
     width: 100%;
   }
   .contentLeft{
-    width: 80px;
+    flex: 1;
   }
   .contentRight{
-    flex: 1;
+    width: 80%;
+
 
     height: calc(100vh - 70px - 44px);
   }

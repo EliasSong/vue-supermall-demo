@@ -27,7 +27,7 @@
     </HomeTabControl>
     <HomeGoodsViews :goods="goods[currentTabLabel].list"></HomeGoodsViews>
     </HomeScroll>
-    <HomeBackTop v-show="backBtnShowFlag" @click.native="backClick"></HomeBackTop>
+    <HomeBackTop :is-show="backBtnShowFlag" @click.native="backClick"></HomeBackTop>
 
   </div>
 

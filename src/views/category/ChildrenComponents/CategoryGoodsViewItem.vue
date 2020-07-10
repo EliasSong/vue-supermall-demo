@@ -1,6 +1,6 @@
 <template>
   <div class="goodviewitem" @click="goodItemClick">
-    <img :src="showImage" alt="">
+    <img :src="gooditem.img" alt="">
     <p>{{gooditem.title}}</p>
     <span class="goodItemPrice">价格：{{gooditem.price}}</span>
     <span class="goodItemCollect"><i style="color: #f86666" class="fas fa-heart"></i> {{gooditem.cfav}}</span>
@@ -20,7 +20,7 @@
     },
     computed:{
       showImage(){
-        return this.gooditem.image || this.gooditem.show.img;
+        return this.gooditem.image || this.gooditem.show.img || this.gooditem.img;
       },
     },
     methods:{

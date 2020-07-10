@@ -28,6 +28,8 @@
 
 
 <script>
+  import 'bootstrap/dist/css/bootstrap.min.css'
+  import 'bootstrap/dist/js/bootstrap.min.js'
   import TabBar from "./components/common/tabbar/tabbar.vue"
   import TabBarItem from "./components/common/tabbar/tabbaritems"
   export default {
@@ -41,4 +43,5 @@
 
 <style>
   @import "./assets/css/base.css";
+
 </style>
