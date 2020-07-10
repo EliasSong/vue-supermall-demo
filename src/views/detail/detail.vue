@@ -165,7 +165,7 @@
   .detail{
     background-color: whitesmoke;
     position: relative;
-    z-index: 1;
+
 
 
   }
@@ -206,7 +206,7 @@
     left: 0;
     right: 0;
     background-color: whitesmoke;
-    z-index: 9;
+    z-index: 1;
     width: 375px;
   }
   .shopInfo{

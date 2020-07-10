@@ -1,6 +1,6 @@
 <template>
   <div id="subNavbar">
-    <div class="subNavbarItem" @click="subNavbarItemClick(index)" :class="{'active':index === subNavbarCurrentIdx}" v-for="(item,index) in mainList" :key="index">{{item.title}}</div>
+    <div class="subNavbarItem" @click="subNavbarItemClick(index)" :class="{'active':index === subNavbarCurrentIdx}" v-for="(item,index) in mainList" :key="index"><p>{{item.title}}</p></div>
   </div>
 </template>
 
@@ -35,11 +35,15 @@
    display: flex;
    flex-direction: column;
    height: 100%;
+
+
  }
   .subNavbarItem{
     flex: 1;
-    line-height: 43.63px;
   }
+ .subNavbarItem p{
+   margin: 8px 0;
+ }
   .active{
     background-color: #fff;
     border-left: 5px solid gray;

@@ -23,7 +23,7 @@
       ref="HomeTabControl1"
       @tabClick="tabChange"
       :titles="titles"
-      v-show="!tabbarControlFixedFlag">
+      >
     </HomeTabControl>
     <HomeGoodsViews :goods="goods[currentTabLabel].list"></HomeGoodsViews>
     </HomeScroll>
@@ -96,6 +96,7 @@
     },
     methods:{
       leaveHomePageStateSave(){
+        this.$refs.HomeScroll.scroll.stop();
         this.saveY = this.$refs.HomeScroll.scroll.y;
       },
       enterHomePageStateRestore(){
@@ -161,17 +162,19 @@
 
 <style scoped>
   #home{
-    margin-bottom: 70px;
     background-color: whitesmoke;
 
   }
   .ScrollArea{
-    /*margin-top: 44px;*/
+    margin-top: 44px;
     height: calc(100vh - 70px - 44px);
     overflow: hidden;
   }
   .HomeTabbarControl{
-    position: relative;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top:43px;
     z-index: 1;
   }
 

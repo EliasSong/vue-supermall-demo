@@ -100,9 +100,13 @@
   .categoryContent{
     display: flex;
     width: 100%;
+    margin-top: 44px;
+    height: calc(100vh - 70px - 44px)
+
   }
   .contentLeft{
     flex: 1;
+    height: calc(100vh - 70px - 44px)
   }
   .contentRight{
     width: 80%;
@@ -113,7 +117,6 @@
   .ScrollArea{
     height: 100%;
     background-color: #fff;
-
     overflow: hidden;
   }
 </style>

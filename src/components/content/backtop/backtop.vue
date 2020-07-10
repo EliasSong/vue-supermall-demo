@@ -32,6 +32,7 @@
     padding: 6px 0px;
     text-align: center;
     position: fixed;
+    z-index: 1;
     right: 20px;
     bottom: 90px;
   }
